@@ -465,8 +465,8 @@ function renderAll() {
   { const _e=document.getElementById('tabQuiz'); if(_e) _e.textContent=t.tabQuiz; }
   { const _e=document.getElementById('tabProgress'); if(_e) _e.textContent=t.tabProgress; }
   { const _e=document.getElementById('tabAbout'); if(_e) _e.textContent=t.tabAbout; }
-  { const _e=document.getElementById('traitsTitle'); if(_e) _e.textContent=t.traitsTitle; }
-  { const _e=document.getElementById('traitsDesc'); if(_e) _e.textContent=t.traitsDesc; }
+  { const _e=(document.getElementById('traitsTitle') || document.getElementById('cardsTitle')); if(_e) _e.textContent=t.traitsTitle; }
+  { const _e=(document.getElementById('traitsDesc') || document.getElementById('cardsDesc')); if(_e) _e.textContent=t.traitsDesc; }
   { const _e=document.getElementById('quizTitle'); if(_e) _e.textContent=t.quizTitle; }
   { const _e=document.getElementById('quizDesc'); if(_e) _e.textContent=t.quizDesc; }
   { const _e=document.getElementById('progressTitle'); if(_e) _e.textContent=t.progressTitle; }
@@ -507,7 +507,7 @@ function renderHome() {
 function renderTraits() {
   const t = T[lang];
   const readTraits = getReadTraits();
-  const container = document.getElementById('traitsContainer');
+  const container = (document.getElementById('traitsContainer') || document.getElementById('cardsContainer'));
   const searchHTML = `<div class="search-bar"><span class="search-icon">🔍</span><input class="search-input" id="traitsSearch" placeholder="${t.searchPlaceholder}" oninput="filterTraits(this.value)"></div>`;
   container.innerHTML = searchHTML + TRAITS.map(tr => {
     const d = tr[lang];
@@ -573,6 +573,7 @@ function renderQuiz() {
 function showQuizQuestion() {
   const t = T[lang];
   const container = document.getElementById('quizContainer');
+  if (!container) return;
   const result = document.getElementById('quizResult');
   result.classList.add('hidden');
   if (quizState.current >= QUIZ.length) { showQuizResult(); return; }
